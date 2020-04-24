@@ -1,0 +1,24 @@
+{
+  "env": {
+    "node": true,
+    "mocha": true
+  },
+  "parser": "babel-eslint",
+  "extends": "eslint-config-airbnb",
+  "rules": {
+    "max-len": 0,
+    "comma-dangle": 0,
+    "no-plusplus": 0,
+    "object-curly-newline": 0,
+    "camelcase": 0,
+    "no-bitwise": 0,
+    "no-underscore-dangle": 0,
+    "no-param-reassign": 0,
+    "prefer-template": 0
+  },
+  "globals": {
+    "assert": true,
+    "expect": true,
+    "sinon": true
+  }
+}

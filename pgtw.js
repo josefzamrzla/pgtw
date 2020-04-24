@@ -16,7 +16,7 @@ export default (options) => {
     password: options.password
   });
 
-  pg.on('error', err => onError(err));
+  pg.on('error', err => onConnectionError(err));
 
   const transaction = async (auditUserId = null) => {
     const client = await pg.connect();
@@ -157,7 +157,9 @@ export default (options) => {
 
         if (existing.length === 1) {
           return existing;
-        } else if (existing.length > 1) {
+        }
+
+        if (existing.length > 1) {
           throw new InvalidConditionError('Invalid condition for insertIfNotExists, multiple rows found.');
         }
 
@@ -169,7 +171,9 @@ export default (options) => {
 
         if (existing.length === 1) {
           return update(data, where, params, { alias: `_upsert_into__${table}`, ...opts });
-        } else if (existing.length > 1) {
+        }
+
+        if (existing.length > 1) {
           throw new InvalidConditionError('Invalid condition for upsert, multiple rows found.');
         }
 
@@ -217,7 +221,7 @@ export default (options) => {
         async firstRow(fields = '*', orderBy = '', opts = {}) {
           const cols = fields.split(',').map(col => col.trim()).join(', ');
           const result = await query(
-            `SELECT ${cols} FROM ${table} ${orderBy ? `ORDER BY ${orderBy}` : ''} LIMIT 1`
+            `SELECT ${cols} FROM ${table} ${orderBy ? `ORDER BY ${orderBy}` : ''} LIMIT 1`,
             [],
             { alias: `_first_row_from__${table}`, ...opts }
           );
