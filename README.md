@@ -2,6 +2,14 @@
 
 Query builder for PostgreSQL with an automatic auditing option and transaction support.
 
+## Installation
+```bash
+npm i pgtw
+```
+```bash
+yarn add pgtw
+```
+
 ## Usage
 ```javascript
 import pgtw from 'pgtw';
@@ -13,22 +21,22 @@ const result = await db.query('SELECT * FROM foo WHERE bar = $1', ['baz']);
 
 // table wrapper
 const products = db.table('products');
-await product.getById('u-u-i-d');
-await product.findOne('*', 'name = $1', ['superhero']);
-await product.insert({ name: 'superhero', price: 123 });
-await product.update({ price: 456 }, 'id = $1', ['u-u-i-d']);
-await product.delete('name = $1', ['superhero']);
+await products.getById('u-u-i-d');
+await products.findOne('*', 'name = $1', ['superhero']);
+await products.insert({ name: 'superhero', price: 123 });
+await products.update({ price: 456 }, 'id = $1', ['u-u-i-d']);
+await products.delete('name = $1', ['superhero']);
 
 // auditing
-await product.audited(userId).insert({ name: 'superhero', price: 123 });
-await product.audited(userId).delete('name = $1', ['superhero']);
+await products.audited(userId).insert({ name: 'superhero', price: 123 });
+await products.audited(userId).delete('name = $1', ['superhero']);
 await db.auditedQuery(userId, 'DELETE FROM foo WHERE bar = $1', ['baz']);
 
 // transactions
 const transaction = await db.transaction();
 try {
-  await product.insert({ name: 'superhero', price: 123 }, transaction);
-  await product.update({ price: 456 }, 'id = $1', ['u-u-i-d'], transaction);
+  await products.insert({ name: 'superhero', price: 123 }, transaction);
+  await products.update({ price: 456 }, 'id = $1', ['u-u-i-d'], transaction);
   await transaction.commit();
 } catch (err) {
   await transaction.rollback();
@@ -88,8 +96,8 @@ Create a transaction. Returns transaction object:
 ```javascript
 const transaction = await db.transaction();
 try {
-  await product.insert({ name: 'superhero', price: 123 }, transaction); // <- short syntax, pass whole transaction object as opts param
-  await product.update({ price: 456 }, 'id = $1', ['u-u-i-d'], { client: transaction.client });
+  await products.insert({ name: 'superhero', price: 123 }, transaction); // <- short syntax, pass whole transaction object as opts param
+  await products.update({ price: 456 }, 'id = $1', ['u-u-i-d'], { client: transaction.client });
   await transaction.commit();
 } catch (err) {
   await transaction.rollback();
@@ -348,3 +356,6 @@ To enable automatic auditing:
   Trigger function `audit_trigger` takes two params:
    - id: a name of primary key column. For multiple columns primary key set NULL: `EXECUTE PROCEDURE audit_trigger(NULL)`
    - excluded columns: an array (in SQL format!) of columns that should be ignored. Eg. `EXECUTE PROCEDURE audit_trigger('id', '{updated_at}')` - changes in column `updated_at` will be ignored
+
+## TODO
+TESTS!!!
