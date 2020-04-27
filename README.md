@@ -105,6 +105,12 @@ try {
 }
 ```
 
+### `disconnect()`
+Disconnect from database.
+```javascript
+await db.disconnect();
+```
+
 ## Table wrapper
 
 ### `table(tableName)`

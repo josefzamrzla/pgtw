@@ -18,6 +18,8 @@ export default (options) => {
 
   pg.on('error', err => onConnectionError(err));
 
+  const disconnect = async () => pg.end();
+
   const transaction = async (auditUserId = null) => {
     const client = await pg.connect();
     const commit = async () => {
@@ -80,6 +82,7 @@ export default (options) => {
     query,
     auditedQuery,
     transaction,
+    disconnect,
     table(table) {
       const doInsert = async (data = {}, suffix = '', opts = {}) => {
         const cols = _.keys(data);
