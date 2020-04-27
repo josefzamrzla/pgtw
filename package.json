@@ -23,9 +23,9 @@
   "author": "Josef Zamrzla",
   "license": "ISC",
   "dependencies": {
-    "lodash": "^4.17.11",
-    "microtime": "^2.1.8",
-    "pg": "^7.6.1"
+    "lodash": "^4.17.15",
+    "microtime": "^3.0.0",
+    "pg": "^8.0.0"
   },
   "devDependencies": {
     "@babel/cli": "^7.2.3",
@@ -42,8 +42,7 @@
     "eslint-loader": "^2.1.1",
     "eslint-plugin-import": "^2.14.0",
     "eslint-plugin-jsx-a11y": "^6.1.2",
-    "eslint-plugin-react": "^7.11.1",
-    "mocha": "^5.2.0"
+    "eslint-plugin-react": "^7.11.1"
   },
   "bugs": {
     "url": "https://github.com/josefzamrzla/pgtw/issues"
