@@ -1,6 +1,9 @@
 import _ from 'lodash';
 import { Pool } from 'pg';
 import microtime from 'microtime';
+import dbg from 'debug';
+
+const debug = dbg('pgtw');
 
 class InvalidConditionError extends Error {}
 
@@ -24,16 +27,21 @@ export default (options) => {
     const client = await pg.connect();
     const commit = async () => {
       await client.query('COMMIT');
+      debug('COMMIT');
       return client.release();
     };
 
     const rollback = async () => {
       await client.query('ROLLBACK');
+      debug('ROLLBACK');
       return client.release();
     };
     await client.query('BEGIN');
+    debug('BEGIN');
     if (auditUserId !== null) {
-      await client.query(`SELECT session_set_user_id('${auditUserId}')`);
+      const q = `SELECT session_set_user_id('${auditUserId}')`;
+      await client.query(q);
+      debug(q);
     }
     return { client, commit, rollback };
   };
@@ -46,6 +54,7 @@ export default (options) => {
       rows: []
     };
 
+    debug(sql);
     if (opts.auditUserId) {
       const { client, commit, rollback } = await transaction(opts.auditUserId);
       try {
