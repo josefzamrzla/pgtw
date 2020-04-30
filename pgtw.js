@@ -179,7 +179,7 @@ export default (options) => {
       };
 
       const upsert = async (data = {}, where, params = [], opts = {}) => {
-        const existing = await find('*', where, params, { alias: `_upsert_into__${table}`, ...opts });
+        const existing = await find('*', where, params, '', { alias: `_upsert_into__${table}`, ...opts });
 
         if (existing.length === 1) {
           return update(data, where, params, { alias: `_upsert_into__${table}`, ...opts });
