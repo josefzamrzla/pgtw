@@ -14,7 +14,7 @@ export default (options) => {
   const logFn = typeof options.loggingFn === 'function' ? options.loggingFn : () => {};
   const onConnectionError = typeof options.onConnectionError === 'function' ? options.onConnectionError : console.error; // eslint-disable-line no-console
 
-  options.camelcaseKeys = !!options.camelcaseKeys;
+  options.camelCaseKeys = !!options.camelCaseKeys;
 
   const pg = new Pool({
     user: options.user,
@@ -87,7 +87,7 @@ export default (options) => {
       audit: opts.auditUserId
     });
 
-    return options.camelcaseKeys ? {
+    return options.camelCaseKeys ? {
       ...result,
       rows: result.rows.map(row => camelcaseKeys(row, { deep: true }))
     } : result;
