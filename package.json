@@ -1,6 +1,6 @@
 {
   "name": "pgtw",
-  "version": "1.0.8",
+  "version": "1.0.9",
   "description": "PGTW - PostgreSQL table wrapper",
   "main": "dist/pgtw.js",
   "engines": {
