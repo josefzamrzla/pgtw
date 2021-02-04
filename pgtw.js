@@ -1,5 +1,6 @@
 import _ from 'lodash';
 import { Pool, types } from 'pg';
+import camelcaseKeys from 'camelcase-keys';
 import microtime from 'microtime';
 import dbg from 'debug';
 
@@ -12,6 +13,8 @@ class InvalidConditionError extends Error {}
 export default (options) => {
   const logFn = typeof options.loggingFn === 'function' ? options.loggingFn : () => {};
   const onConnectionError = typeof options.onConnectionError === 'function' ? options.onConnectionError : console.error; // eslint-disable-line no-console
+
+  options.camelcaseKeys = !!options.camelcaseKeys;
 
   const pg = new Pool({
     user: options.user,
@@ -84,7 +87,10 @@ export default (options) => {
       audit: opts.auditUserId
     });
 
-    return result;
+    return options.camelcaseKeys ? {
+      ...result,
+      rows: result.rows.map(row => camelcaseKeys(row, { deep: true }))
+    } : result;
   };
 
   const auditedQuery = async (auditUserId, sql, params, opts = {}) => query(sql, params, { auditUserId, ...opts });

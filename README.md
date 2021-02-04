@@ -53,17 +53,18 @@ try {
  - `database`: database name
  - `loggingFn`: logging callback (no-op by default)
  - `onConnectionError`: called when db connection fails
+ - `camelCaseKeys`: format result rows keys as camelCased (`false` by default)
 
 ### Logging callback (options.loggingFn)
 If set, then the logging callback is called with params:
  - `sql`: SQL query (with prepared statements)
  - `params`: query params
  - `stats`: JSON object with query stats:
-  - `command`: SQL query command (eg. SELECT, UPDATE, ...)
-  - `took`: time the query took in milliseconds
-  - `rows`: number of returned/affected rows
-  - `alias`: query alias for log aggregations
-  - `audit`: caller user ID, see auditing
+   - `command`: SQL query command (eg. SELECT, UPDATE, ...)
+   - `took`: time the query took in milliseconds
+   - `rows`: number of returned/affected rows
+   - `alias`: query alias for log aggregations
+   - `audit`: caller user ID, see auditing
 
 
 ## Methods

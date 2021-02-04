@@ -23,6 +23,7 @@
   "author": "Josef Zamrzla",
   "license": "ISC",
   "dependencies": {
+    "camelcase-keys": "^6.2.2",
     "debug": "^4.1.1",
     "lodash": "^4.17.19",
     "microtime": "^3.0.0",
