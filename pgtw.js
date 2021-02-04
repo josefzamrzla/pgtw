@@ -224,7 +224,7 @@ export default (options) => {
           return result.rowCount > 0 ? result.rows[0] : null;
         },
         async getAll(fields = '*', suffix = '', opts = {}) {
-          const cols = fields.split(',').map(col => _.snakeCase(col).trim()).join(', ');
+          const cols = fields !== '*' ? fields.split(',').map(col => _.snakeCase(col)).join(', ') : '*';
           const result = await query(`SELECT ${cols} FROM ${table} ${suffix}`, [], { alias: `_get_all_from__${table}`, ...opts });
 
           return result.rows;
