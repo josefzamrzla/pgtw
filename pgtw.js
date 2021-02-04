@@ -139,7 +139,7 @@ export default (options) => {
       };
 
       const find = async (fields = '*', where, params = [], suffix = '', opts = {}) => {
-        const cols = fields.split(',').map(col => _.snakeCase(col).trim()).join(', ');
+        const cols = fields !== '*' ? fields.split(',').map(col => _.snakeCase(col)).join(', ') : '*';
         const result = await query(
           `SELECT ${cols} FROM ${table} WHERE ${where} ${suffix}`,
           params,
@@ -150,7 +150,7 @@ export default (options) => {
       };
 
       const findOne = async (fields = '*', where, params = [], opts = {}) => {
-        const cols = fields.split(',').map(col => _.snakeCase(col).trim()).join(', ');
+        const cols = fields !== '*' ? fields.split(',').map(col => _.snakeCase(col)).join(', ') : '*';
         const result = await query(
           `SELECT ${cols} FROM ${table} WHERE ${where} LIMIT 1`,
           params,
@@ -214,7 +214,7 @@ export default (options) => {
         find,
         findOne,
         async getById(id, fields = '*', opts = {}) {
-          const cols = fields.split(',').map(col => _.snakeCase(col).trim()).join(', ');
+          const cols = fields !== '*' ? fields.split(',').map(col => _.snakeCase(col)).join(', ') : '*';
           const result = await query(
             `SELECT ${cols} FROM ${table} WHERE id = $1 LIMIT 1`,
             [id],
