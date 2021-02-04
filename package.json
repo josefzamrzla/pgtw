@@ -24,9 +24,9 @@
   "license": "ISC",
   "dependencies": {
     "debug": "^4.1.1",
-    "lodash": "^4.17.15",
+    "lodash": "^4.17.19",
     "microtime": "^3.0.0",
-    "pg": "^8.0.0"
+    "pg": "^8.5.1"
   },
   "devDependencies": {
     "@babel/cli": "^7.2.3",

@@ -1,7 +1,9 @@
 import _ from 'lodash';
-import { Pool } from 'pg';
+import { Pool, types } from 'pg';
 import microtime from 'microtime';
 import dbg from 'debug';
+
+types.setTypeParser(types.builtins.INT8, value => parseInt(value, 10));
 
 const debug = dbg('pgtw');
 
