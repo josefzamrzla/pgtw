@@ -108,7 +108,7 @@ export default (options) => {
         const placeholders = [];
         const statements = cols.map((col) => {
           placeholders.push(`$${paramNo++}`);
-          return col;
+          return _.snakeCase(col);
         });
 
         const result = await query(
@@ -125,7 +125,7 @@ export default (options) => {
         const cols = _.keys(rest);
         let queryData = _.values(rest);
         let paramNo = 1;
-        const statements = cols.map(col => `${col} = $${paramNo++}`);
+        const statements = cols.map(col => `${_.snakeCase(col)} = $${paramNo++}`);
         const whereStatement = where.replace(/\$[0-9]+/g, () => `$${paramNo++}`);
         queryData = queryData.concat(params);
 
@@ -139,7 +139,7 @@ export default (options) => {
       };
 
       const find = async (fields = '*', where, params = [], suffix = '', opts = {}) => {
-        const cols = fields.split(',').map(col => col.trim()).join(', ');
+        const cols = fields.split(',').map(col => _.snakeCase(col).trim()).join(', ');
         const result = await query(
           `SELECT ${cols} FROM ${table} WHERE ${where} ${suffix}`,
           params,
@@ -150,7 +150,7 @@ export default (options) => {
       };
 
       const findOne = async (fields = '*', where, params = [], opts = {}) => {
-        const cols = fields.split(',').map(col => col.trim()).join(', ');
+        const cols = fields.split(',').map(col => _.snakeCase(col).trim()).join(', ');
         const result = await query(
           `SELECT ${cols} FROM ${table} WHERE ${where} LIMIT 1`,
           params,
@@ -214,7 +214,7 @@ export default (options) => {
         find,
         findOne,
         async getById(id, fields = '*', opts = {}) {
-          const cols = fields.split(',').map(col => col.trim()).join(', ');
+          const cols = fields.split(',').map(col => _.snakeCase(col).trim()).join(', ');
           const result = await query(
             `SELECT ${cols} FROM ${table} WHERE id = $1 LIMIT 1`,
             [id],
@@ -224,7 +224,7 @@ export default (options) => {
           return result.rowCount > 0 ? result.rows[0] : null;
         },
         async getAll(fields = '*', suffix = '', opts = {}) {
-          const cols = fields.split(',').map(col => col.trim()).join(', ');
+          const cols = fields.split(',').map(col => _.snakeCase(col).trim()).join(', ');
           const result = await query(`SELECT ${cols} FROM ${table} ${suffix}`, [], { alias: `_get_all_from__${table}`, ...opts });
 
           return result.rows;
