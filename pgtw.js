@@ -248,6 +248,15 @@ export default (options) => {
 
           return result.rowCount > 0 ? result.rows[0] : null;
         },
+        async exists(where, params = [], suffix = '', opts = {}) {
+          const result = await query(
+            `SELECT 1 FROM ${table} WHERE ${where} ${suffix}`,
+            params,
+            { alias: `_exists_in__${table}`, ...opts }
+          );
+
+          return result.rowCount > 0;
+        },
         insert,
         insertIfNotExists,
         update,

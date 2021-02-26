@@ -194,6 +194,14 @@ Count number of rows by `where` and `params`.
 await products.count('name LIKE $1', ['super%']);
 ```
 
+### `exists(where, params = [], suffix = '', opts = {})`
+Checks if row(s) exists by `where` and `params`. Returns boolean.
+
+```javascript
+
+await products.exists('name LIKE $1', ['super%']);
+```
+
 ### `insert(data = {}, opts = {})`
 Inserts new row to the table.
  - `data`: JSON object with row data
