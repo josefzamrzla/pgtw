@@ -21,7 +21,8 @@ export default (options) => {
     host: options.host || 'localhost',
     port: options.port || 5432,
     database: options.database,
-    password: options.password
+    password: options.password,
+    ssl: options.ssl
   });
 
   pg.on('error', err => onConnectionError(err));
