@@ -77,7 +77,17 @@ export default (options) => {
         throw err;
       }
     } else {
-      result = await (opts && opts.client ? opts.client : pg).query(sql, params);
+      try {
+        result = await (opts && opts.client ? opts.client : pg).query(sql, params);
+      } catch (err) {
+        logFn(sql, params, {
+          took: microtime.now() - start,
+          alias: opts.alias ? opts.alias.replace(/"/g, '') : undefined,
+          audit: opts.auditUserId,
+          failed: true
+        });
+        throw err;
+      }
     }
 
     logFn(sql, params, {

@@ -23,11 +23,11 @@
   "author": "Josef Zamrzla",
   "license": "ISC",
   "dependencies": {
-    "camelcase-keys": "^6.2.2",
-    "debug": "^4.1.1",
-    "lodash": "^4.17.19",
+    "camelcase-keys": "^7.0.1",
+    "debug": "^4.3.2",
+    "lodash": "^4.17.21",
     "microtime": "^3.0.0",
-    "pg": "^8.5.1"
+    "pg": "^8.7.1"
   },
   "devDependencies": {
     "@babel/cli": "^7.2.3",
