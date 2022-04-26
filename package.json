@@ -3,11 +3,6 @@
   "version": "1.0.20",
   "description": "PGTW - PostgreSQL table wrapper",
   "main": "dist/pgtw.js",
-  "exports": {
-    "import": "./pgtw.js",
-    "require": "./dist/pgtw.js"
-  },
-  "type": "module",
   "engines": {
     "node": ">=10.0"
   },
