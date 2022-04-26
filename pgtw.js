@@ -1,8 +1,10 @@
 import _ from 'lodash';
-import { Pool, types } from 'pg';
+import * as postgres from 'pg';
 import camelcaseKeys from 'camelcase-keys';
 import microtime from 'microtime';
 import dbg from 'debug';
+
+const { Pool, types } = postgres.default;
 
 types.setTypeParser(types.builtins.INT8, value => parseInt(value, 10));
 
