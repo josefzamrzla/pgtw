@@ -5,7 +5,6 @@ import microtime from 'microtime';
 import dbg from 'debug';
 
 const { Pool, types } = postgres.default;
-
 types.setTypeParser(types.builtins.INT8, value => parseInt(value, 10));
 
 const debug = dbg('pgtw');
