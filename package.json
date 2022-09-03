@@ -3,6 +3,7 @@
   "version": "1.0.22",
   "description": "PGTW - PostgreSQL table wrapper",
   "main": "dist/pgtw.js",
+  "type": "module",
   "engines": {
     "node": ">=10.0"
   },
