@@ -2,8 +2,6 @@
   "name": "pgtw",
   "version": "2.0.5",
   "description": "PGTW - PostgreSQL table wrapper",
-  "type": "module",
-  "exports": "./pgtw.js",
   "main": "./pgtw.js",
   "engines": {
     "node": ">=10.0"
