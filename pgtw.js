@@ -100,7 +100,7 @@ export default (options) => {
 
     return options.camelCaseKeys ? {
       ...result,
-      rows: result.rows.map(row => camelcaseKeys(row, { deep: true, exclude: [/[a-z][0-9]+[a-z]/] }))
+      rows: result.rows.map(row => camelcaseKeys(row, { deep: true }))
     } : result;
   };
 
