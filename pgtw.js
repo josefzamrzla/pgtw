@@ -131,6 +131,27 @@ export default (options) => {
         return result.rowCount > 0 ? result.rows[0] : result.rows;
       };
 
+      const updateOne = async (data = {}, where, params = [], opts = {}) => {
+        const { id, ...rest } = data;
+        const cols = _.keys(rest);
+        let queryData = _.values(rest);
+        let paramNo = 1;
+        const statements = cols.map(col => `${_.snakeCase(col)} = $${paramNo++}`);
+        const whereStatement = where.replace(/\$[0-9]+/g, () => `$${paramNo++}`);
+        queryData = queryData.concat(params);
+
+        const result = await query(
+          `UPDATE ${table} SET ${statements.join(', ')}
+          WHERE ${whereStatement}
+          LIMIT 1
+          RETURNING *`,
+          queryData,
+          { alias: `_update_one__${table}`, ...opts }
+        );
+
+        return result.rowCount > 0 ? result.rows[0] : result.rows;
+      };
+
       const update = async (data = {}, where, params = [], opts = {}) => {
         const { id, ...rest } = data;
         const cols = _.keys(rest);
@@ -146,7 +167,7 @@ export default (options) => {
           { alias: `_update__${table}`, ...opts }
         );
 
-        return result.rowCount > 0 ? result.rows[0] : result.rows;
+        return result.rows;
       };
 
       const find = async (fields = '*', where, params = [], suffix = '', opts = {}) => {
@@ -271,6 +292,8 @@ export default (options) => {
         insert,
         insertIfNotExists,
         update,
+        updateOne,
+        updateMany: update,
         upsert,
       };
     }
