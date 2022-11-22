@@ -143,7 +143,6 @@ export default (options) => {
         const result = await query(
           `UPDATE ${table} SET ${statements.join(', ')}
           WHERE ${whereStatement}
-          LIMIT 1
           RETURNING *`,
           queryData,
           { alias: `_update_one__${table}`, ...opts }
